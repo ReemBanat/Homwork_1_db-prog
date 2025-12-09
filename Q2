@@ -1,1 +1,26 @@
 Q2)
+) Bank Database SQL Queries
+A.	Find the ID of each customer of the bank who has an account but not a loan.
+SELECT ID
+FROM depositor
+EXCEPT
+SELECT ID
+FROM borrower;
+
+B.	Find the ID of each customer who lives on the same street and in the same city as customer '12345'.
+
+SELECT T1.ID
+FROM customer AS T1, customer AS T2
+WHERE T2.ID = '12345'
+  AND T1.customer_street = T2.customer_street
+  AND T1.customer_city = T2.customer_city
+  AND T1.ID <> '12345';
+
+C.	Find the name of each branch that has at least one customer who has an account in the bank and who lives in "Harrison".
+
+SELECT DISTINCT T1."branch name"
+FROM branch AS T1
+JOIN account AS T2 ON T1."branch name" = T2."branch name"
+JOIN depositor AS T3 ON T2."account number" = T3."account number"
+JOIN customer AS T4 ON T3.ID = T4.ID
+WHERE T4.customer_city = 'Harrison';
